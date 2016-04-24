@@ -97,6 +97,7 @@ class ViewController: UIViewController {
     func switchStates() {
         circlePathLayer.fillColor = switchVal ? safeColor : unsafeColor
         circlePathLayer.strokeColor = switchVal ? unsafeColor : safeColor
+        switchVal = !switchVal
     }
     
     func performOperation() {
@@ -129,10 +130,18 @@ class ViewController: UIViewController {
         waitAnimateSwitch = !waitAnimateSwitch
         
         if i++ == 5 {
+            i = 0
             waitAnimateTimer.invalidate()
-            circlePathLayer.fillColor = unsafeColor
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            circlePathLayer.strokeEnd = 0
+            CATransaction.commit()
+            
+            holdCompleted = false
+            switchStates()
         }
     }
+    
 //
 //    var a = 2
 //    func shrinkAnimate() {
