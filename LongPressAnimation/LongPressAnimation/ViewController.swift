@@ -13,8 +13,8 @@ class ViewController: UIViewController {
     let circlePathLayer = CAShapeLayer()
     let circleRadius: CGFloat = 100.0
     
-    let unsafeColor = UIColor.redColor().CGColor
-    let safeColor = UIColor.grayColor().CGColor
+    let unsafeColor = UIColor(red: 0xFF / 255.0, green: 0xDA / 255.0, blue: 0x00 / 255.0, alpha: 1.0).CGColor
+    let safeColor = UIColor(red: 0x4C / 255.0, green: 0xD9 / 255.0, blue: 0x64 / 255.0, alpha: 1.0).CGColor
     
     var holdCompleted = false
     var switchVal = false
