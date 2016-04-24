@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     let circlePathLayer = CAShapeLayer()
-    let circleRadius: CGFloat = 20.0
+    let circleRadius: CGFloat = 100.0
     
     let unsafeColor = UIColor.redColor().CGColor
     let safeColor = UIColor.grayColor().CGColor
@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     var switchVal = false
     
     var updateTimer: NSTimer!
+    var waitAnimateTimer: NSTimer!
     
 //    var progress: CGFloat {
 //        get {
@@ -50,7 +51,8 @@ class ViewController: UIViewController {
 
     func drawCircularLoader() {
         circlePathLayer.frame = view.bounds
-        circlePathLayer.lineWidth = 2
+        circlePathLayer.lineWidth = 10
+        circlePathLayer.lineCap = kCALineCapRound
         circlePathLayer.fillColor = safeColor
         circlePathLayer.strokeColor = unsafeColor
         view.layer.addSublayer(circlePathLayer)
@@ -99,7 +101,47 @@ class ViewController: UIViewController {
     
     func performOperation() {
         print("Some operation triggered")
+        waitAnimateTimer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "waitAnimate", userInfo: nil, repeats: true)
     }
+    
+//    var endsAnimateSwitch = true
+//    func endsAnimate() {
+//        if circlePathLayer.strokeEnd < 0.5 {
+//            endsAnimateSwitch = false
+//        } else if circlePathLayer.strokeEnd > 1 {
+//            endsAnimateSwitch = true
+//        }
+//        if endsAnimateSwitch {
+//            circlePathLayer.strokeEnd -= 0.01
+//            circlePathLayer.strokeStart += 0.01
+//        } else {
+//            circlePathLayer.strokeEnd += 0.01
+//            circlePathLayer.strokeStart -= 0.01
+//        }
+//    }
+    
+    var waitAnimateSwitch = false
+    var i = 0
+    func waitAnimate() {
+//        circlePathLayer.lineDashPattern = [5]
+//        circlePathLayer.lineCap = waitAnimateSwitch ? kCALineCapRound : kCALineCapButt
+        circlePathLayer.lineWidth = waitAnimateSwitch ? 10 : 0
+        waitAnimateSwitch = !waitAnimateSwitch
+        
+        if i++ == 5 {
+            waitAnimateTimer.invalidate()
+            circlePathLayer.fillColor = unsafeColor
+        }
+    }
+//
+//    var a = 2
+//    func shrinkAnimate() {
+//        a = a + 2
+//        if a == 8 {
+//            a = 2
+//        }
+//        circlePathLayer.lineDashPattern = [a]
+//    }
     
     // MARK: Button methods
 
