@@ -31,6 +31,9 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="zus-AF-SPY" secondAttribute="bottom" constant="50" id="mLx-bC-5Eo"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="holdButton" destination="zus-AF-SPY" id="dsO-Q2-sUa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

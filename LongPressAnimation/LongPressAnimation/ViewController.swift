@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     var updateTimer: NSTimer!
     var waitAnimateTimer: NSTimer!
     
+    @IBOutlet weak var holdButton: UIButton!
+    
 //    var progress: CGFloat {
 //        get {
 //            return circlePathLayer.strokeEnd
@@ -45,6 +47,7 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         circlePathLayer.frame = view.bounds
         circlePathLayer.path = circlePath().CGPath
+        holdButton.frame = circleFrame()
     }
     
     // MARK: Draw methods
@@ -64,7 +67,7 @@ class ViewController: UIViewController {
     func circleFrame() -> CGRect {
         var circleFrame = CGRect(x: 0, y: 0, width: 2*circleRadius, height: 2*circleRadius)
         circleFrame.origin.x = CGRectGetMidX(circlePathLayer.bounds) - CGRectGetMidX(circleFrame)
-        circleFrame.origin.y = CGRectGetMidY(circlePathLayer.bounds) - CGRectGetMidY(circleFrame)
+        circleFrame.origin.y = CGRectGetMidY(circlePathLayer.bounds) - CGRectGetMidY(circleFrame) - 130
         return circleFrame
     }
     
