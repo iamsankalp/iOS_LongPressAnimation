@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     let unsafeColor = UIColor.redColor().CGColor
     let safeColor = UIColor.grayColor().CGColor
     
+    var holdCompleted = false
+    
     var updateTimer: NSTimer!
     
 //    var progress: CGFloat {
@@ -31,7 +33,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         drawCircularLoader()
-        updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "fillPath", userInfo: nil, repeats: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,10 +74,9 @@ class ViewController: UIViewController {
     func fillPath() {
         circlePathLayer.strokeEnd += 0.01
         
-        if circlePathLayer.strokeEnd > 0.7 {
+        if circlePathLayer.strokeEnd > 1 {
             updateTimer.invalidate()
-            
-            updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "reversePath", userInfo: nil, repeats: true)
+            holdCompleted = true
         }
     }
     
@@ -87,6 +87,22 @@ class ViewController: UIViewController {
             updateTimer.invalidate()
         }
     }
+    
+    // MARK: Button methods
 
+    @IBAction func buttonHold(sender: UIButton) {
+        print("hold")
+        updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "fillPath", userInfo: nil, repeats: true)
+    }
+    
+    @IBAction func buttonRelease(sender: UIButton) {
+        print("release")
+        
+        if !holdCompleted {
+            updateTimer.invalidate()
+            updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "reversePath", userInfo: nil, repeats: true)
+        }
+    }
+    
 }
 
