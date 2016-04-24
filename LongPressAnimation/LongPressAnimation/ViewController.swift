@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     let safeColor = UIColor.grayColor().CGColor
     
     var holdCompleted = false
+    var switchVal = false
     
     var updateTimer: NSTimer!
     
@@ -77,6 +78,9 @@ class ViewController: UIViewController {
         if circlePathLayer.strokeEnd > 1 {
             updateTimer.invalidate()
             holdCompleted = true
+            performOperation()
+//            switchStates()
+//            circlePathLayer.strokeEnd = 0
         }
     }
     
@@ -88,18 +92,34 @@ class ViewController: UIViewController {
         }
     }
     
+    func switchStates() {
+        circlePathLayer.fillColor = switchVal ? safeColor : unsafeColor
+        circlePathLayer.strokeColor = switchVal ? unsafeColor : safeColor
+    }
+    
+    func performOperation() {
+        print("Some operation triggered")
+    }
+    
     // MARK: Button methods
 
     @IBAction func buttonHold(sender: UIButton) {
         print("hold")
-        updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "fillPath", userInfo: nil, repeats: true)
+//        holdCompleted = false
+        if let _ = updateTimer {
+            updateTimer.invalidate()
+        }
+        if !holdCompleted {
+            updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "fillPath", userInfo: nil, repeats: true)
+        }
     }
     
     @IBAction func buttonRelease(sender: UIButton) {
         print("release")
-        
-        if !holdCompleted {
+        if let _ = updateTimer {
             updateTimer.invalidate()
+        }
+        if !holdCompleted {
             updateTimer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: "reversePath", userInfo: nil, repeats: true)
         }
     }
